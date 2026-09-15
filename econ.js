@@ -5,3 +5,6 @@ var potatoes=0
 var seeds=0
 var seedsCost=10
 var growthCooldown=5000
+
+//image 
+var potatoImage
