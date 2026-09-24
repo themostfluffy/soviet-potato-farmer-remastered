@@ -24,9 +24,9 @@ var landCost=100
 var minpotatoes=1
 var maxpotatoes=5
 //potato growth(upgrade)
-var growthRate=1
+var growthRate=10
 //max potatoes seeds and vodka in storage(upgrade)
-var maxPotatoes=10;
+var maxPotatoesStored=10;
 var maxSeeds=10;
 var maxVodka=10;
 
@@ -40,6 +40,9 @@ var growthCooldown3=5000;
 var growthCooldown4=5000;
 //max
 var growthCooldownM=5000;
+
+//bankruptcy
+var bankruptcy=false
 
 
 

@@ -32,7 +32,7 @@ function draw() {
   }
   // display cash, potatoes, seeds, and vodka
   text(" cash:" + cash, 300, 50);
-  text(" potato:" + potatoes + "/" + maxPotatoes, 300, 70);
+  text(" potato:" + potatoes + "/" + maxPotatoesStored, 300, 70);
   text(" seeds:" + seeds + "/" + maxSeeds, 300, 90);
   text(" vodka:" + vodka + "/" + maxVodka, 300, 110);
 
@@ -40,6 +40,8 @@ function draw() {
   text("Growth Rate: " + growthRate, 300, 560);
   text("Min Potatoes: " + minpotatoes, 300, 580);
   text("Max Potatoes: " + maxpotatoes, 300, 600);
+  //bankruptcy check
+  //bankruptcy();
 
   //seed purchasing button
   fill(0, 200, 0);
@@ -67,9 +69,13 @@ function draw() {
   rect(800, 0, 100, 100);
   //land4
   rect(800, 100, 100, 100);
+  //upgradeables placeholder on the side of the screen
+  fill(0, 150, 150);
+  rect(1200, 0, 100,100);
+ 
   //max potatoes code
-  if (potatoes > maxPotatoes) {
-    potatoes = maxPotatoes;
+  if (potatoes > maxPotatoesStored) {
+    potatoes = maxPotatoesStored;
   }
   //max seeds code
   if (seeds > maxSeeds) {
@@ -129,16 +135,20 @@ function draw() {
   // Show a tooltip when the mouse is over a land plot.
   fill(0);
   if (mouseX > 900 && mouseX < 1000 && mouseY > 0 && mouseY < 100) {
-    showLandTooltip(900, 0, land1, land1growth, growthCooldown1);
+    showLandTooltipPotato(900, 0, land1, land1growth, growthCooldown1);
   }
   if (mouseX > 900 && mouseX < 1000 && mouseY > 100 && mouseY < 200) {
-    showLandTooltip(900, 100, land2, land2growth, growthCooldown2);
+    showLandTooltipPotato(900, 100, land2, land2growth, growthCooldown2);
   }
   if (mouseX > 800 && mouseX < 900 && mouseY > 0 && mouseY < 100) {
-    showLandTooltip(800, 0, land3, land3growth, growthCooldown3);
+    showLandTooltipPotato(800, 0, land3, land3growth, growthCooldown3);
   }
   if (mouseX > 800 && mouseX < 900 && mouseY > 100 && mouseY < 200) {
-    showLandTooltip(800, 100, land4, land4growth, growthCooldown4);
+    showLandTooltipPotato(800, 100, land4, land4growth, growthCooldown4);
+  }
+  //show tooltip for the upgradeables button
+  if (mouseX > 1200 && mouseX < 1300 && mouseY > 0 && mouseY < 100) {
+    showUpgradeableTooltip(1200, 0,  maxPotatoesStored);
   }
 }
 
@@ -301,6 +311,7 @@ function mousePressed() {
     //countdownthe growth rate and then add the potatoes to the inventory
     land4growth = true;
   }
+  uppgrade();
 }
 
 function debugText() {
@@ -329,8 +340,8 @@ function debugText() {
   text("Max Potatoes: " + maxpotatoes, 100, 340);
   text("land Cost: " + landCost, 100, 360);
 }
-
-function showLandTooltip(x, y, owned, growing, cooldown) {
+// Show a tooltip when the mouse is over a land plot.
+function showLandTooltipPotato(x, y, owned, growing, cooldown) {
   if (growing) {
     text("Growth progress: " + cooldown, x - 180, y + 50);
   } else if (owned) {
@@ -339,3 +350,39 @@ function showLandTooltip(x, y, owned, growing, cooldown) {
     text("Buy land: $" + landCost, x - 180, y + 50);
   }
 }
+
+//show a tooltip when the mouse is oveer an upgradeable button
+function showUpgradeableTooltip(x, y, growthRate, minPotatoes, maxPotatoes, maxPotatoesStored) {
+  text("Growth Rate: " + growthRate, x - 180, y + 50);
+  text("Min Potatoes: " + minPotatoes, x - 180, y + 70);
+  text("Max Potatoes: " + maxPotatoes, x - 180, y + 90);
+  text("potatoes storage: " + maxPotatoesStored, x - 180, y + 110);
+}
+
+function uppgrade(){
+if (mouseX > 1200 && mouseX < 1300 && mouseY > 0 && mouseY < 100&& cash >= 50) {
+
+  //upgrade max potatoes storage
+  maxPotatoesStored = maxPotatoesStored + 5;
+  //deduct the cost from the player's cash
+  cash = cash - 50;
+} 
+}
+//losing condition
+function bankruptcyWithLand() {
+
+}
+
+    function bankruptcy() {
+      if ( cash <= 9 && potatoes <= 0 && vodka <= 0 &&land1 == false &&land2 == false &&land3 == false &&land4 == false) 
+        {
+          bankruptcy = true;
+      } else if (cash <= 9 && seeds <= 0 && potatoes <= 0 && vodka <= 0 && land1growth == false && land2growth == false && land3growth == false && land4growth == false) {
+        bankruptcy = true;
+      }
+
+      if (bankrupcy == true) {
+        text("You are bankrupt! Game Over!", 500, 300);
+      }
+    
+    }
